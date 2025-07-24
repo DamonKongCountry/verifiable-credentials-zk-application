@@ -23,11 +23,12 @@ function App() {
       const signature = null;
       if (keyPair.secretKey) {
         try {
-          const signature = await blsSign(message, keyPair.secretKey);
+          const messages = [Uint8Array.from(Buffer.from(message, "utf-8"))];
+          const signature = await blsSign({keyPair, messages: messages});
           console.log("Signature:", signature);
           if (keyPair.publicKey) {
             try {
-              const isValid = await blsVerify(message, keyPair.publicKey, signature);
+              const isValid = await blsVerify({messages: messages, publicKey: keyPair.publicKey, signature});
               console.log("Signature valid:", isValid);
             } catch (error) {
               console.error("Verification error:", error);
@@ -86,7 +87,7 @@ function App() {
 
   return (
     <div className="App">
-      <h1>Enter your age:</h1>
+      <h1>Enter your asge:</h1>
       <input type="text" onChange={(e) => setMessage(e.target.value)}/>
       <input type="submit" value="Submit" onClick={async (e) => keyGenerated()}/>
     </div>
