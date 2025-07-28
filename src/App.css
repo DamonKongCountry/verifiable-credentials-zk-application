@@ -28,6 +28,61 @@
   color: #61dafb;
 }
 
+.credentialContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  height: 600px;
+  width: 70vw;
+  margin: 20px auto;
+  padding: 20px;
+  background-color: #61dafb;
+}
+
+.list {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 400px;
+  flex: 1;
+  max-width: 600px; 
+  padding: 10px;
+  row-gap: 10px;
+}
+
+.verifyToggle {
+  padding: 10px;
+  cursor: pointer;
+  width: 30px;
+  height: 100%;
+  background-image: url("./assets/tick.svg");
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  justify-self: flex-end;
+  align-items: center;
+}
+
+.buttonClicked {
+  background-color: #aaa;
+}
+
+.buttonDefault {
+  background-color: #ddd;
+}
+
+.claimBox {
+  display: flex;
+  flex-direction: row;
+  outline: 2px solid red;
+  justify-content: space-between;
+  align-items: center;
+  height: 30px;
+  width: 100%;
+}
+
 @keyframes App-logo-spin {
   from {
     transform: rotate(0deg);
