@@ -47,7 +47,7 @@
   align-items: center;
   height: 400px;
   flex: 1;
-  max-width: 600px; 
+  max-width: 600px;
   padding: 10px;
   row-gap: 10px;
 }
@@ -76,17 +76,29 @@
 .claimBox {
   display: flex;
   flex-direction: row;
-  outline: 2px solid red;
+  /* outline: 2px solid red; */
   justify-content: space-between;
   align-items: center;
   height: 30px;
   width: 100%;
 }
 
+.errorRect {
+  outline: 2px solid maroon;
+  background-color: lightcoral;
+  color: maroon;
+  width: 300px;
+  margin: 6px;
+  border-radius: 6px;
+  margin-top: 0;
+}
+
+
 @keyframes App-logo-spin {
   from {
     transform: rotate(0deg);
   }
+
   to {
     transform: rotate(360deg);
   }

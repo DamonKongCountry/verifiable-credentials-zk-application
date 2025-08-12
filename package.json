@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "@mattrglobal/bbs-signatures": "^2.0.0",
+    "@noble/post-quantum": "^0.4.1",
     "@testing-library/dom": "^10.4.0",
     "@testing-library/jest-dom": "^6.6.3",
     "@testing-library/react": "^16.3.0",
