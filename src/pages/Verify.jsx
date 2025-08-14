@@ -37,11 +37,14 @@ export default function Verify() {
   const toggle = (value, name, spot) => {
     console.log("Toggling value:", value, "for name:", name);
     const newPos = [...positions];
-    if (newPos.find(i => i === spot)) {
-      newPos.pop(spot)
+    console.log(newPos, spot);
+    const foundIndex = newPos.indexOf(spot)
+    if (foundIndex !== -1) {
+      newPos.splice(foundIndex, 1);
     } else {
       newPos.push(spot)
     }
+    console.log(newPos);
     setPositions(newPos);
 
     // maintain allMessages' base format

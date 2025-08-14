@@ -143,8 +143,8 @@ function Prover({ positions, allMessages, basePos, mode }) {
 
         // get certain messages for exposed portion
         for (const index in Object.values(allMessagesRef.current)) {
-          // console.log(posRef.current, " ", parseInt(index))
-          if (parseInt(index) in posRef.current) {
+          console.log(posRef.current, " ", parseInt(index))
+          if (posRef.current.indexOf(parseInt(index)) !== -1) {
             console.log("Adding message ", Object.values(allMessagesRef.current)[index], " from position ", index);
             fMessages.push(Uint8Array.from(Buffer.from(Object.values(allMessagesRef.current)[index], "utf-8")));
           }
