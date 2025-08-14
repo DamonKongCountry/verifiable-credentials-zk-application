@@ -11,7 +11,7 @@ import {
 import { useState, useEffect, useRef } from 'react';
 
 // make this a more specific prover later
-function Prover({ messages, positions, basePos, allMessages }) {
+function Prover({ positions, allMessages, basePos, mode }) {
   // include logic for receiving info and security key
   // include logic for sending data over
 
@@ -20,11 +20,6 @@ function Prover({ messages, positions, basePos, allMessages }) {
   const [proofVerified, setProofVerified] = useState(null);
 
   const [keyPair, setKeyPair] = useState(null);
-
-  const messagesRef = useRef(messages);
-  useEffect(() => {
-    messagesRef.current = messages;
-  }, [messages]);
 
   const allMessagesRef = useRef(allMessages);
   useEffect(() => {
@@ -48,7 +43,8 @@ function Prover({ messages, positions, basePos, allMessages }) {
 
   useEffect(() => {
     const sigHandler = async (event) => {
-      const pair = await generateBls12381G2KeyPair();
+      console.log("arrived")
+      const pair = await generateBls12381G2KeyPair()
       console.log("Key Pair Generated:", pair);
       setKeyPair(pair);
       setSigVerified(null);
@@ -60,44 +56,32 @@ function Prover({ messages, positions, basePos, allMessages }) {
         console.log("Key pair not set.");
         setSigVerified(false);
         return;
-      } else if (Object.keys(event.detail.messages).length === 0) {
-        console.log("No messages to sign.");
-        setSigVerified(false);
-        return;
       }
+
       if (pair.secretKey) {
         try {
           const fMessages = [];
           for (const value of Object.values(event.detail.messages)) {
             fMessages.push(Uint8Array.from(Buffer.from(value, "utf-8")));
           }
-          // console.log("fMessages:", fMessages);
 
           // create signature
-          const signature = await blsSign({ keyPair: pair, messages: fMessages });
-          // const seed = randomBytes(32); // seed is optional
-          // const keys = ml_dsa65.keygen(seed);
-          // const concatMsg = utf8ToBytes(Object.values(messagesRef.current).join(""));
-          // const signature = ml_dsa65.sign(keys.secretKey, concatMsg);
-
-          setSignature(signature);
-          // console.log("Signature:", signature);
-
-          if (pair.publicKey) {
-            try {
+          const signature = await blsSign({ keyPair: pair, messages: fMessages })
+          try {
+            if (pair.publicKey) {
+              setSignature(signature);
               // verify signature
-              const event = new CustomEvent('verifySigSend', { detail: { messages: fMessages, publicKey: pair.publicKey, signature: signature } });
-              document.dispatchEvent(event);
-            } catch (error) {
-              console.error("Verification error:", error);
-              setSigVerified(false);
-              return;
+              console.log(pair, signature)
+              const verifySigEvent = new CustomEvent('verifySigSend', { detail: { messages: event.detail.messages, publicKey: pair.publicKey, signature: signature } });
+              document.dispatchEvent(verifySigEvent);
             }
+          } catch (error) {
+            console.error("Proof verification error:", error);
+            setSigVerified(false);
           }
         } catch (error) {
-          console.error("Signing error:", error);
+          console.error("Proof creation error:", error);
           setSigVerified(false);
-          return;
         }
       }
     };
@@ -115,26 +99,40 @@ function Prover({ messages, positions, basePos, allMessages }) {
   }, []);
 
   useEffect(() => {
-    const proofHandler = async (event) => {
-      setSigVerified(event.detail.isValid.verified);
-      console.log("Messages for proof:", messagesRef.current, "\nPositions for proof:", posRef.current);
+    keyPair !== null && localStorage.setItem("keyPair", JSON.stringify(keyPair));
+  }, [keyPair])
+
+  useEffect(() => {
+    signature !== null && localStorage.setItem("signature", JSON.stringify(signature));
+  }, [signature])
+
+  useEffect(() => {
+    const loginHandler = (event) => {
+      setSigVerified(event.detail.verified);
+      const result = event.detail.verified;
+
+      const loginEvent = new CustomEvent('loginSuccessful', { detail: { result } });
+      document.dispatchEvent(loginEvent);
+    }
+
+    const proofHandler = async () => {
+      console.log("Messages for proof:", allMessagesRef.current, "\nPositions for proof:", posRef.current);
       // Ensure keyPair and signature are set before proceeding
-      if (!event.detail.isValid.verified) {
-        console.log("Signature verification failed.");
-        setProofVerified(false);
-        return;
-      }
-      if (!event.detail.publicKey) {
+      const keyPairLocal = JSON.parse(localStorage.getItem("keyPair"));
+      keyPairLocal.publicKey = Uint8Array.from(Object.values(keyPairLocal.publicKey));
+      const signatureLocal = Uint8Array.from(Object.values(JSON.parse(localStorage.getItem("signature"))));
+      console.log(keyPairLocal, signatureLocal)
+      if (!keyPairLocal.publicKey) {
         console.log("Key pair not set for proof.");
         setProofVerified(false);
         return;
       }
-      if (!event.detail.signature) {
+      if (!signatureLocal) {
         console.log("Signature not set for proof.");
         setProofVerified(false);
         return;
       }
-      if (Object.keys(messagesRef.current).length === 0) {
+      if (Object.keys(allMessagesRef.current).length === 0) {
         console.log("Message not set for proof.");
         setProofVerified(false);
         return;
@@ -142,11 +140,13 @@ function Prover({ messages, positions, basePos, allMessages }) {
 
       try {
         const fMessages = [];
+
         // get certain messages for exposed portion
-        for (const [key, value] of Object.entries(messagesRef.current)) {
-          if (basePos[key] !== undefined) {
-            console.log("Adding message for proof:", key, value);
-            fMessages.push(Uint8Array.from(Buffer.from(value, "utf-8")));
+        for (const index in Object.values(allMessagesRef.current)) {
+          // console.log(posRef.current, " ", parseInt(index))
+          if (parseInt(index) in posRef.current) {
+            console.log("Adding message ", Object.values(allMessagesRef.current)[index], " from position ", index);
+            fMessages.push(Uint8Array.from(Buffer.from(Object.values(allMessagesRef.current)[index], "utf-8")));
           }
         }
         if (fMessages.length === 0) {
@@ -162,24 +162,21 @@ function Prover({ messages, positions, basePos, allMessages }) {
         }
 
         //convert positions to array
-        const arrPos = [];
-        for (const value of Object.values(posRef.current)) {
-          arrPos.push(value);
-        }
-        console.log("signature = ", event.detail.signature, "\nconv = ", allConvMessages, "\npk = ", event.detail.publicKey, "\n pos ref curr = ", posRef.current);
+        console.log("signature = ", signatureLocal, "\nconv = ", allConvMessages, "\npk = ", keyPairLocal.publicKey, "\n pos ref curr = ", posRef.current);
+        console.log("fMessages = ", fMessages);
         const proof = await blsCreateProof({
-          signature: event.detail.signature,
-          publicKey: event.detail.publicKey,
+          signature: signatureLocal,
+          publicKey: keyPairLocal.publicKey,
           messages: allConvMessages,  // Use all original messages
           nonce: Uint8Array.from(Buffer.from("nonce", "utf8")),
-          revealed: arrPos // Reveal only the specified positions
+          revealed: posRef.current // Reveal only the specified positions
         });
-        console.log("Proof created:", proof);
+        // console.log("Proof created:", proof);
 
         const eventToSend = new CustomEvent('verifyProofSend', {
           detail: {
             proof: proof,
-            publicKey: event.detail.publicKey,
+            publicKey: keyPairLocal.publicKey,
             messages: fMessages,  // Only the revealed messages
             nonce: Uint8Array.from(Buffer.from("nonce", "utf8"))
           }
@@ -191,19 +188,18 @@ function Prover({ messages, positions, basePos, allMessages }) {
         return;
       }
     };
-
-    document.addEventListener('verifySigResult', proofHandler);
+    document.addEventListener('verifySigResult', loginHandler);
+    document.addEventListener('verifyMessages', proofHandler);
     return () => {
-      document.removeEventListener('verifySigResult', proofHandler);
+      document.removeEventListener('verifyMessages', proofHandler);
+      document.removeEventListener('verifySigResult', loginHandler);
     };
   }, [keyPair]);
 
   return (
     <div className="proverContainer">
-      {sigVerified === true && <p>Signature is valid!</p>}
-      {sigVerified === false && <p>Signature is invalid!</p>}
-      {proofVerified === true && <p>Proof is valid!</p>}
-      {proofVerified === false && <p>Proof is invalid!</p>}
+      {proofVerified === true && mode === "verify" && <p>Messages verified!</p>}
+      {proofVerified === false && mode === "verify" && <p>Messages not verified!</p>}
     </div>
   )
 }

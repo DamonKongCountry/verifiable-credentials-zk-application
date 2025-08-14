@@ -12,7 +12,7 @@ function Verifier() {
       console.log("Received verification request:", event.detail);
       const isValid = await blsVerify({ messages: event.detail.messages, publicKey: event.detail.publicKey, signature: event.detail.signature });
       // console.log("Signature verification result:", isValid);
-      const resultEvent = new CustomEvent('verifySigResult', { detail: { isValid: isValid, publicKey: event.detail.publicKey, signature: event.detail.signature } });
+      const resultEvent = new CustomEvent('verifySigResult', { detail: { isValid } });
       document.dispatchEvent(resultEvent);
     };
 
@@ -20,7 +20,7 @@ function Verifier() {
       console.log("Received proof verification request:", event.detail);
       const isValid = await blsVerifyProof({ proof: event.detail.proof, publicKey: event.detail.publicKey, messages: event.detail.messages, nonce: event.detail.nonce });
       console.log("Proof verification result:", isValid);
-      const resultEvent = new CustomEvent('verifyProofResult', { detail: { isValid: isValid } });
+      const resultEvent = new CustomEvent('verifyProofResult', { detail: { isValid } });
       document.dispatchEvent(resultEvent);
     };
 
@@ -33,8 +33,7 @@ function Verifier() {
   }, [])
 
   return (
-    <div className="verifierContainer">
-      <h2>Verifier</h2>
+    <div>
       {/* Add UI elements for verification */}
     </div>
   );
