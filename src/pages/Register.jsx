@@ -75,18 +75,18 @@ export default function Register() {
   }, []);
 
   return (
-    <div className="App">
-      <h1>Enter info:</h1>
+    <div className="background">
+      <h1 className="pageTitle">Register:</h1>
       <div className="credentialContainer">
         <form className="list" onSubmit={(e) => e.preventDefault()}>
           <div className="claimBox age">
             <h3>Age</h3>
-            <input type="text" onChange={(e) => { setAge(e.target.value); changeValue("age", String(e.target.value)) }} />
+            <input className="formInput" type="text" onChange={(e) => { setAge(e.target.value); changeValue("age", String(e.target.value)) }} />
           </div>
           {!checkCorrectAgeFormat() && submitPressed && <Error message={"Invalid age format"}></Error>}
           <div className="claimBox name">
             <h3>Name</h3>
-            <input type="text" onChange={(e) => { setName(e.target.value); changeValue("name", String(e.target.value)) }} />
+            <input className="formInput" type="text" onChange={(e) => { setName(e.target.value); changeValue("name", String(e.target.value)) }} />
           </div>
           {!checkCorrectNameFormat() && submitPressed && <Error message={"Invalid name format"}></Error>}
           <div className="claimBox sex">
@@ -98,10 +98,10 @@ export default function Register() {
           {!checkSexEntered() && submitPressed && <Error message={"Sex not chosen"}></Error>}
           <div className="claimBox country">
             <h3>Country</h3>
-            <input type="text" onChange={(e) => { setCountry(e.target.value); changeValue("country", String(e.target.value)) }} />
+            <input className="formInput" type="text" onChange={(e) => { setCountry(e.target.value); changeValue("country", String(e.target.value)) }} />
           </div>
           {!checkCorrectCountryFormat() && submitPressed && <Error message={"Invalid country format"}></Error>}
-          <input type="submit" value="Submit" onClick={async () => sendMessages()} />
+          <input className="formSubmit" type="submit" value="Submit" onClick={async () => sendMessages()} />
         </form>
       </div>
       <Prover mode={MODE} allMessages={allMessages} />

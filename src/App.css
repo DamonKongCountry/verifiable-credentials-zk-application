@@ -1,3 +1,13 @@
+h1,
+h3 {
+  margin: 0;
+  font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+}
+
+.pageTitle {
+  color: #fff;
+}
+
 .App {
   text-align: center;
 }
@@ -28,16 +38,30 @@
   color: #61dafb;
 }
 
+.background {
+  text-align: center;
+  min-width: 100vw;
+  height: 100vh;
+  background-color: darkcyan;
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
 .credentialContainer {
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
   align-items: center;
-  height: 600px;
-  width: 70vw;
+  min-height: initial;
+  width: 40vw;
+  min-width: 350px;
   margin: 20px auto;
   padding: 20px;
-  background-color: #61dafb;
+  background-color: #fff;
+  border-radius: 30px;
 }
 
 .list {
@@ -48,8 +72,7 @@
   height: 400px;
   flex: 1;
   max-width: 600px;
-  padding: 10px;
-  row-gap: 10px;
+  row-gap: 50px;
 }
 
 .verifyToggle {
@@ -57,20 +80,23 @@
   cursor: pointer;
   width: 30px;
   height: 100%;
+  border-radius: 50%;
   background-image: url("./assets/tick.svg");
   background-size: contain;
   background-repeat: no-repeat;
   background-position: center;
+  border-color: #ddd;
+  border-style: solid;
   justify-self: flex-end;
   align-items: center;
 }
 
 .buttonClicked {
-  background-color: #aaa;
+  background-color: #33ee33;
 }
 
 .buttonDefault {
-  background-color: #ddd;
+  background-color: #fff;
 }
 
 .claimBox {
@@ -81,6 +107,7 @@
   align-items: center;
   height: 30px;
   width: 100%;
+  column-gap: 50px;
 }
 
 .errorRect {
@@ -91,6 +118,28 @@
   margin: 6px;
   border-radius: 6px;
   margin-top: 0;
+}
+
+.formInput {
+  border-radius: 3px;
+  margin: 5px;
+  border-color: lightgray;
+  border-style: solid;
+  border-width: 2px;
+  font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+}
+
+.formSubmit {
+  border-radius: 10px;
+  width: 100%;
+  height: 10%;
+  background-color: darkcyan;
+  outline-width: 0px;
+  border-width: 0px;
+  color: #fff;
+  font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+  font-weight: bold;
+  font-size: large;
 }
 
 

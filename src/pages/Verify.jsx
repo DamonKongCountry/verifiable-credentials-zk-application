@@ -93,19 +93,19 @@ export default function Verify() {
   }, [allMessages])
 
   return (
-    <div className="App">
-      <h1>Enter info:</h1>
+    <div className="background">
+      <h1 className="pageTitle">Validate:</h1>
       <div className="credentialContainer">
         <form className="list" onSubmit={(e) => e.preventDefault()}>
           <div className="claimBox age">
             <h3>Age</h3>
-            <input type="text" onChange={(e) => { setAge(e.target.value); changeValue("age", String(e.target.value)) }} />
+            <input className="formInput" type="text" onChange={(e) => { setAge(e.target.value); changeValue("age", String(e.target.value)) }} />
             <LockButton toggle={toggle} value={age} name={"age"} spot={0} />
           </div>
           {!checkCorrectAgeFormat() && submitPressed && <Error message={"Invalid age format"}></Error>}
           <div className="claimBox name">
             <h3>Name</h3>
-            <input type="text" onChange={(e) => { setName(e.target.value); changeValue("name", String(e.target.value)) }} />
+            <input className="formInput" type="text" onChange={(e) => { setName(e.target.value); changeValue("name", String(e.target.value)) }} />
             <LockButton toggle={toggle} value={name} name={"name"} spot={1} />
           </div>
           {!checkCorrectNameFormat() && submitPressed && <Error message={"Invalid name format"}></Error>}
@@ -119,11 +119,11 @@ export default function Verify() {
           {!checkSexEntered() && submitPressed && <Error message={"Sex not chosen"}></Error>}
           <div className="claimBox country">
             <h3>Country</h3>
-            <input type="text" onChange={(e) => { setCountry(e.target.value); changeValue("country", String(e.target.value)) }} />
+            <input className="formInput" type="text" onChange={(e) => { setCountry(e.target.value); changeValue("country", String(e.target.value)) }} />
             <LockButton toggle={toggle} value={country} name={"country"} spot={3} />
           </div>
           {!checkCorrectCountryFormat() && submitPressed && <Error message={"Invalid country format"}></Error>}
-          <input type="submit" value="Submit" onClick={async () => sendMessages()} />
+          <input className="formSubmit" type="submit" value="Submit" onClick={async () => sendMessages()} />
         </form>
       </div>
       <Prover positions={positions} basePos={basePositions} allMessages={allMessages} mode={MODE} />
