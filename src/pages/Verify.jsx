@@ -4,6 +4,7 @@ import LockButton from '../components/LockButton';
 import Prover from '../users/Prover';
 import Verifier from '../users/Verifier';
 import Error from '../components/Error';
+import { useNavigate } from 'react-router';
 
 export default function Verify() {
   const [age, setAge] = useState(-1);
@@ -28,6 +29,13 @@ export default function Verify() {
   const [positions, setPositions] = useState([]);
 
   const MODE = "verify";
+  let navigate = useNavigate();
+
+  useEffect(() => {
+    if (!localStorage.getItem("token")) {
+      navigate("/");
+    }
+  }, [])
 
   const posRef = useRef(positions);
   useEffect(() => {
@@ -94,7 +102,7 @@ export default function Verify() {
 
   return (
     <div className="background">
-      <h1 className="pageTitle">Validate:</h1>
+      <h1 className="pageTitle">Verify:</h1>
       <div className="credentialContainer">
         <form className="list" onSubmit={(e) => e.preventDefault()}>
           <div className="claimBox age">

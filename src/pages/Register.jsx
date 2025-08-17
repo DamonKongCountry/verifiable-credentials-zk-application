@@ -5,6 +5,8 @@ import Verifier from '../users/Verifier';
 
 import { useNavigate } from 'react-router';
 import { useState, useEffect } from 'react';
+import { randomBytes } from '@noble/post-quantum/utils';
+const crypto = require("crypto");
 
 export default function Register() {
   const [age, setAge] = useState(-1);
@@ -63,6 +65,7 @@ export default function Register() {
   useEffect(() => {
     const loginHandler = () => {
       console.log("Login successful, navigating to home page.");
+      localStorage.setItem("token", crypto.randomBytes(32))
       navigate("/home");
     }
     document.addEventListener('loginSuccessful', loginHandler);

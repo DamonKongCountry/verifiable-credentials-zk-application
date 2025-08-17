@@ -142,6 +142,10 @@ h3 {
   font-size: large;
 }
 
+.proverMsg {
+  color: white;
+  font-weight: bold;
+}
 
 @keyframes App-logo-spin {
   from {

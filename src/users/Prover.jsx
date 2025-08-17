@@ -151,6 +151,7 @@ function Prover({ positions, allMessages, basePos, mode }) {
         }
         if (fMessages.length === 0) {
           console.log("No messages to create proof.");
+          setProofVerified(false);
           return;
         }
 
@@ -198,8 +199,8 @@ function Prover({ positions, allMessages, basePos, mode }) {
 
   return (
     <div className="proverContainer">
-      {proofVerified === true && mode === "verify" && <p>Messages verified!</p>}
-      {proofVerified === false && mode === "verify" && <p>Messages not verified!</p>}
+      {proofVerified === true && mode === "verify" && <h3 className='proverMsg'>Messages verified!</h3>}
+      {proofVerified === false && mode === "verify" && <h3 className='proverMsg'>Messages not verified!</h3>}
     </div>
   )
 }
