@@ -137,7 +137,7 @@ export default function Register() {
     <div className="background">
       <h1 className="pageTitle">Register:</h1>
       <div className="pageContents register">
-        <div className="credentialContainer">
+        <div className="credentialContainer login">
           <form className="list" onSubmit={(e) => e.preventDefault()}>
             <div className="claimBox email">
               <h3>Email</h3>

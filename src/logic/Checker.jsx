@@ -28,7 +28,7 @@ export function checkCorrectEmailFormat(email) {
 };
 
 export function checkCorrectExpiryFormat(expiryDate) {
-  return expiryDate instanceof Date && !isPast(expiryDate);
+  return !isPast(expiryDate);
 };
 
 export function checkCorrectIssueCodeFormat(issueCode) {
@@ -37,7 +37,7 @@ export function checkCorrectIssueCodeFormat(issueCode) {
 };
 
 export function checkCorrectIssueDateFormat(issueDate) {
-  return issueDate instanceof Date && isPast(issueDate);
+  return isPast(issueDate);
 };
 
 export function checkCorrectLicenceClassFormat(licenceClass, credential) {

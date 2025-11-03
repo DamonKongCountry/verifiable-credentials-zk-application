@@ -35,6 +35,7 @@ export default function Verify() {
   const [positions, setPositions] = useState([]);
   const [verificationError, setVerificationError] = useState(false);
   const [verified, setVerified] = useState(false);
+  const [submitLoading, setSubmitLoading] = useState(false);
 
   let navigate = useNavigate();
 
@@ -72,6 +73,7 @@ export default function Verify() {
     //console.log(messages);
     setVerified(false);
     setVerificationError(false);
+    setSubmitLoading(true);
 
     // create proof
     let pk = null;
@@ -120,6 +122,8 @@ export default function Verify() {
       //console.log("rpk =", pk)
     } catch (err) {
       console.error('Error restoring pk/sig:', err);
+      setSubmitLoading(false);
+      setVerificationError(true);
       return;
     }
 
@@ -213,13 +217,15 @@ export default function Verify() {
         if (positions.length === 0) {
           setVerificationError(true);
           setVerified(false);
+          setSubmitLoading(false);
           return;
         }
-        for (const i in Object.values(messages)) {
-          console.log("Checking:", String(Object.values(messages)[i]), "and", String(improperMessages[i]))
-          if ((String(Object.values(messages)[i]) !== String(improperMessages[i])) && positions.includes(i)) {
+        for (const k in Object.keys(messages)) {
+          console.log("Checking:", String(Object.values(messages)[k]), "and", String(improperMessages[k]))
+          if (!(String(Object.values(messages)[k]) === String(improperMessages[k])) && positions.includes(Number(k))) {
             setVerificationError(true);
             setVerified(false);
+            setSubmitLoading(false);
             return;
           }
         }
@@ -228,9 +234,12 @@ export default function Verify() {
         if (response) {
           setVerificationError(false)
           setVerified(true);
+          setSubmitLoading(false);
         }
       } catch (error) {
         console.log('POST call failed');
+        setVerificationError(false);
+        setSubmitLoading(false);
       }
     }
 
@@ -323,6 +332,9 @@ export default function Verify() {
           {mode === "passport" && (
             <PassportForm sendMessages={sendMessages} toggle={toggle} />
           )}
+          {submitLoading && <div className="loadingContainer">
+            <div className="loadingIcon" />
+          </div>}
           {verificationError && !verified && <Error message={"Verification Error"} main={true} />}
           {verified && !verificationError && <h3 className='proverMsg'>Messages verified!</h3>}
         </div>

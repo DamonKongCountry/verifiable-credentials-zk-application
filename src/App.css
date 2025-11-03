@@ -67,6 +67,7 @@ input.formSubmit:hover {
   text-align: center;
   max-width: 100%;
   min-height: 100vh;
+  height: 100%;
   background-color: darkcyan;
   margin: auto;
   display: flex;
@@ -90,7 +91,14 @@ input.formSubmit:hover {
   min-width: 900px;
   min-height: initial;
   height: 100%;
+  margin: 20px;
   /* border: 2px solid red; */
+}
+
+.login {
+  max-height: 20vh;
+  justify-content: center;
+  width: 30vw;
 }
 
 .register {

@@ -44,6 +44,7 @@ export default function PassportForm({ sendMessages }) {
   });
 
   const [positions, setPositions] = useState([]);
+  const [submitLoading, setSubmitLoading] = useState(false);
 
   const posRef = useRef(positions);
   useEffect(() => {
@@ -82,12 +83,21 @@ export default function PassportForm({ sendMessages }) {
   };
 
   const checkCorrectMessageFormat = () => {
-    return checkSexEntered() && checkCorrectAgeFormat() && checkCorrectCountryFormat() && checkCorrectNameFormat();
+    return checkCorrectPassportTypeFormat(passportType) &&
+      checkCorrectIssueCodeFormat(issueCode) &&
+      checkCorrectNameFormat(name) &&
+      nationality.length !== 0 &&
+      checkCorrectDobFormat(dob) &&
+      checkSexEntered() &&
+      checkCorrectIssueDateFormat(issueDate) &&
+      checkCorrectExpiryFormat(expiry) &&
+      authority.length !== 0 && country.length !== 0 && state.length !== 0 && city.length !== 0 &&
+      checkCorrectDocumentNoFormat(documentNo);
   }
 
   const submitPress = () => {
     setSubmitPressed(true);
-    return checkCorrectMessageFormat()
+    return checkCorrectMessageFormat();
   }
 
   const changeValue = (name, value) => {
@@ -121,7 +131,7 @@ export default function PassportForm({ sendMessages }) {
         </select>
         <LockButton toggle={toggle} value={nationality} name={"nationality"} spot={3} />
       </div>
-      {nationality.length < 0 && submitPressed && <Error message={"Invalid nationality format"}></Error>}
+      {nationality.length === 0 && submitPressed && <Error message={"Invalid nationality format"}></Error>}
       <div className="claimBox email">
         <h3>Date of Birth</h3>
         <input className="formInput" type="date" onChange={(e) => { setDob(e.target.value); changeValue("dob", String(e.target.value)) }} />
