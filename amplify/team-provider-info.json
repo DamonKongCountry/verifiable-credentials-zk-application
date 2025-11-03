@@ -1,0 +1,38 @@
+{
+  "dev": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-verifiablecredential-dev-de347-authRole",
+      "UnauthRoleArn": "arn:aws:iam::266735839276:role/amplify-verifiablecredential-dev-de347-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::266735839276:role/amplify-verifiablecredential-dev-de347-authRole",
+      "Region": "ap-southeast-2",
+      "DeploymentBucketName": "amplify-verifiablecredential-dev-de347-deployment",
+      "UnauthRoleName": "amplify-verifiablecredential-dev-de347-unauthRole",
+      "StackName": "amplify-verifiablecredential-dev-de347",
+      "StackId": "arn:aws:cloudformation:ap-southeast-2:266735839276:stack/amplify-verifiablecredential-dev-de347/f7103410-9f36-11f0-97c8-063d6a90a065",
+      "AmplifyAppId": "d2pwg77gn0sird"
+    },
+    "categories": {
+      "function": {
+        "vcUser": {
+          "deploymentBucketName": "amplify-verifiablecredential-dev-de347-deployment",
+          "s3Key": "amplify-builds/vcUser-68384366485673355a71-build.zip"
+        },
+        "vcUserId": {
+          "deploymentBucketName": "amplify-verifiablecredential-dev-de347-deployment",
+          "s3Key": "amplify-builds/vcUserId-66694c7356744978426c-build.zip"
+        },
+        "vcVerify": {
+          "deploymentBucketName": "amplify-verifiablecredential-dev-de347-deployment",
+          "s3Key": "amplify-builds/vcVerify-536d5a565530362f6c4c-build.zip"
+        }
+      },
+      "api": {
+        "api533f5e87": {},
+        "verifierapi9ad310": {}
+      },
+      "hosting": {
+        "S3AndCloudFront": {}
+      }
+    }
+  }
+}

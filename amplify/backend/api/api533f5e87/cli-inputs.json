@@ -1,0 +1,19 @@
+{
+  "version": 1,
+  "paths": {
+    "/user": {
+      "name": "/user",
+      "lambdaFunction": "vcUser",
+      "permissions": {
+        "setting": "open"
+      }
+    },
+    "/userId/{id}": {
+      "name": "/userId/{id}",
+      "lambdaFunction": "vcUserId",
+      "permissions": {
+        "setting": "open"
+      }
+    }
+  }
+}

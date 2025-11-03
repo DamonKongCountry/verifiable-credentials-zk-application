@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "paths": {
+    "/verify/{id}": {
+      "name": "/verify/{id}",
+      "lambdaFunction": "vcVerify",
+      "permissions": {
+        "setting": "open"
+      }
+    }
+  }
+}

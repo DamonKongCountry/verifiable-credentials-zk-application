@@ -1,8 +1,8 @@
 import './../App.css'
 
-function Error({ message }) {
+function Error({ message, main = false }) {
   return (
-    <div className="errorRect">
+    <div className={main ? "errorRect errorMain" : "errorRect"}>
       <>Error: {message}</>
     </div>
   )

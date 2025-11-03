@@ -5,6 +5,13 @@ import {
 } from "@mattrglobal/bbs-signatures";
 import { useEffect } from 'react';
 
+// import { Amplify } from "aws-amplify";
+// import awsExports from "./aws-exports";
+// Amplify.configure(awsExports);
+
+const myAPI = "api533f5e87";
+const path = "/userId";
+
 function Verifier() {
   // Verification logic goes here
   useEffect(() => {

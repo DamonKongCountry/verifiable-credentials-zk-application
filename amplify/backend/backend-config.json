@@ -1,0 +1,114 @@
+{
+  "api": {
+    "api533f5e87": {
+      "dependsOn": [
+        {
+          "attributes": [
+            "Name",
+            "Arn"
+          ],
+          "category": "function",
+          "resourceName": "vcUser"
+        },
+        {
+          "attributes": [
+            "Name",
+            "Arn"
+          ],
+          "category": "function",
+          "resourceName": "vcUserId"
+        }
+      ],
+      "providerPlugin": "awscloudformation",
+      "service": "API Gateway"
+    },
+    "verifierapi9ad310": {
+      "dependsOn": [
+        {
+          "attributes": [
+            "Name",
+            "Arn"
+          ],
+          "category": "function",
+          "resourceName": "vcVerify"
+        }
+      ],
+      "providerPlugin": "awscloudformation",
+      "service": "API Gateway"
+    }
+  },
+  "function": {
+    "vcUser": {
+      "build": true,
+      "dependsOn": [],
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda"
+    },
+    "vcUserId": {
+      "build": true,
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda"
+    },
+    "vcVerify": {
+      "build": true,
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda"
+    }
+  },
+  "hosting": {
+    "S3AndCloudFront": {
+      "providerPlugin": "awscloudformation",
+      "service": "S3AndCloudFront"
+    }
+  },
+  "parameters": {
+    "AMPLIFY_function_vcUserId_deploymentBucketName": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "vcUserId"
+        }
+      ]
+    },
+    "AMPLIFY_function_vcUserId_s3Key": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "vcUserId"
+        }
+      ]
+    },
+    "AMPLIFY_function_vcUser_deploymentBucketName": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "vcUser"
+        }
+      ]
+    },
+    "AMPLIFY_function_vcUser_s3Key": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "vcUser"
+        }
+      ]
+    },
+    "AMPLIFY_function_vcVerify_deploymentBucketName": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "vcVerify"
+        }
+      ]
+    },
+    "AMPLIFY_function_vcVerify_s3Key": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "vcVerify"
+        }
+      ]
+    }
+  }
+}
