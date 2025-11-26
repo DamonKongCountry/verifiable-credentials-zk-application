@@ -105,7 +105,7 @@ export default function PassportForm({ sendMessages }) {
   };
 
   return (
-    <form className="list" onSubmit={(e) => e.preventDefault()}>
+    <form className="list pass" onSubmit={(e) => e.preventDefault()}>
       <div className="claimBox email">
         <h3>Type</h3>
         <input className="formInput" type="text" maxLength="1" onChange={(e) => { setPassportType(e.target.value); changeValue("passportType", String(e.target.value)) }} />

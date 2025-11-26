@@ -104,15 +104,9 @@ export default function Register() {
 
           // check if user details are correct within the api, only if statusCode is 200
           //get data from the "proper" key
-          for (const [form, data] of Object.entries(response.proper)) {
-            console.log("data =", data)
-            localStorage.setItem(form + "Pk", data.publicKey);
-            localStorage.setItem(form + "Sig", data.signature);
-            //localStorage.setItem(form + "Sig", Uint8Array.from(Object.values(data.signature)));
-          }
-          console.log("improper = ", response.improper);
-          for (const [form, data] of Object.entries(response.improper)) {
-            localStorage.setItem(form, String(data));
+          for (const [form, data] of Object.entries(response)) {
+            localStorage.setItem(form + "Pk", Object.values(data.publicKey));
+            localStorage.setItem(form + "Sig", Object.values(data.signature));
           }
 
           // set localStorage values
@@ -135,7 +129,7 @@ export default function Register() {
 
   return (
     <div className="background">
-      <h1 className="pageTitle">Register:</h1>
+      <h1 className="pageTitle">Register</h1>
       <div className="pageContents register">
         <div className="credentialContainer login">
           <form className="list" onSubmit={(e) => e.preventDefault()}>

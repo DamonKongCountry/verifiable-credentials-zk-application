@@ -82,7 +82,7 @@ export default function AccountForm({ sendMessages }) {
   };
 
   return (
-    <form className="list" onSubmit={(e) => e.preventDefault()}>
+    <form className="list acc" onSubmit={(e) => e.preventDefault()}>
       <div className="claimBox email">
         <h3 className="formLabel">Email:</h3>
         <input className="formInput" type="email" onChange={(e) => { setEmail(e.target.value); changeValue("email", String(e.target.value)) }} />
@@ -93,9 +93,9 @@ export default function AccountForm({ sendMessages }) {
       {!checkCorrectEmailFormat() && submitPressed && <Error message={"Invalid email format"}></Error>}
       <div className="claimBox age">
         <h3 className="formLabel">Age:</h3>
-        <input className="formInput" type="number" onChange={(e) => { setAge(e.target.value); changeValue("age", String(e.target.value)) }} />
+        <input className="formInput" type="text" onChange={(e) => { setAge(Number(e.target.value)); changeValue("age", String(Number(e.target.value))) }} />
         <div className="formToggle">
-          <LockButton toggle={toggle} value={age} name={"age"} spot={1} />
+          <LockButton toggle={toggle} value={Number(age)} name={"age"} spot={1} />
         </div>
       </div>
       {!checkCorrectAgeFormat() && submitPressed && <Error message={"Invalid age format"}></Error>}

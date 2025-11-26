@@ -51,11 +51,6 @@ exports.handler = async (event) => {
     "country",
   ];
 
-  // improper
-  let orderArrAcc = null;
-  let orderArrPass = null;
-  let orderArrDriver = null;
-
   let messagesAcc = null;
   let pairAcc = null;
   let signatureAcc = null;
@@ -99,35 +94,17 @@ exports.handler = async (event) => {
       };
     }
     // set in order
-    orderArrAcc = []
+    const orderArrAcc = []
     for (const key of orderAcc) {
       orderArrAcc.push(messagesAcc[key] ?? "");
     }
 
     // convert
     messagesAcc = Object.values(orderArrAcc).map(value => Uint8Array.from(Buffer.from(String(value), "utf-8")));
-    // return {
-    //   statusCode: 200,
-    //   //  Uncomment below to enable CORS requests
-    //   headers: {
-    //     "Access-Control-Allow-Origin": "*",
-    //     "Access-Control-Allow-Headers": "*"
-    //   },
-    //   body: JSON.stringify({messagesAcc}),
-    // };
     pairAcc = await generateBls12381G2KeyPair();
     signatureAcc = await blsSign({ keyPair: pairAcc, messages: messagesAcc });
     if (messagesAcc && pairAcc && pairAcc.publicKey && signatureAcc) {
       const isValid = await blsVerify({ messages: messagesAcc, publicKey: pairAcc.publicKey, signature: signatureAcc });
-      // return {
-      //   statusCode: 200,
-      //   //  Uncomment below to enable CORS requests
-      //   headers: {
-      //     "Access-Control-Allow-Origin": "*",
-      //     "Access-Control-Allow-Headers": "*"
-      //   },
-      //   body: JSON.stringify(isValid),
-      // }
       if (!isValid.verified) {
         return {
           statusCode: 400,
@@ -180,7 +157,7 @@ exports.handler = async (event) => {
       })
     );
     messagesPass = messagesPass.Item;
-    orderArrPass = []
+    const orderArrPass = []
     for (const key of orderPassport) {
       orderArrPass.push(messagesPass[key] ?? "");
     }
@@ -200,7 +177,7 @@ exports.handler = async (event) => {
       })
     );
     messagesDriver = messagesDriver.Item;
-    orderArrDriver = []
+    const orderArrDriver = []
     for (const key of orderDriverLicence) {
       orderArrDriver.push(messagesDriver[key] ?? "");
     }
@@ -283,45 +260,6 @@ exports.handler = async (event) => {
     };
   }
 
-  const proof = await blsCreateProof({ signature: signatureAcc, publicKey: pairAcc.publicKey, nonce: Uint8Array.from(Buffer.from("nonce", "utf8")), revealed: [0, 1], messages: messagesAcc })
-  const isProofVerified = await blsVerifyProof({
-    proof,
-    publicKey: pairAcc.publicKey,
-    messages: messagesAcc.slice(0, 2),
-    nonce: Uint8Array.from(Buffer.from("nonce", "utf8")),
-  });
-  if (!isProofVerified.verified) {
-    // verification works here but not on the frontend? what the fuck?
-    return {
-      statusCode: 400,
-      //  Uncomment below to enable CORS requests
-      headers: {
-        "Access-Control-Allow-Origin": "*",
-        "Access-Control-Allow-Headers": "*"
-      },
-      body: JSON.stringify("Proof verification failed"),
-    };
-  }
-  // convert each element to base64
-  try {
-    signatureAcc = Object.values(signatureAcc).map(value => btoa(String.fromCharCode(value)));
-    signaturePass = Object.values(signaturePass).map(value => btoa(String.fromCharCode(value)));
-    signatureDriver = Object.values(signatureDriver).map(value => btoa(String.fromCharCode(value)));
-    pairAcc.publicKey = Object.values(pairAcc.publicKey).map(value => btoa(String.fromCharCode(value)));
-    pairPass.publicKey = Object.values(pairPass.publicKey).map(value => btoa(String.fromCharCode(value)));
-    pairDriver.publicKey = Object.values(pairDriver.publicKey).map(value => btoa(String.fromCharCode(value)));
-  } catch {
-    return {
-      statusCode: 400,
-      //  Uncomment below to enable CORS requests
-      headers: {
-        "Access-Control-Allow-Origin": "*",
-        "Access-Control-Allow-Headers": "*"
-      },
-      body: JSON.stringify("Base64 conversion error"),
-    };
-  }
-
   return {
     statusCode: 200,
     //  Uncomment below to enable CORS requests
@@ -329,26 +267,18 @@ exports.handler = async (event) => {
       "Access-Control-Allow-Origin": "*",
       "Access-Control-Allow-Headers": "*"
     },
-    // body: JSON.stringify({proof}),
     body: JSON.stringify({
-      improper: {
-        orderArrAcc,
-        orderArrPass,
-        orderArrDriver
+      acc: {
+        publicKey: pairAcc.publicKey,
+        signature: signatureAcc
       },
-      proper: {
-        acc: {
-          publicKey: pairAcc.publicKey,
-          signature: signatureAcc
-        },
-        pass: {
-          publicKey: pairPass.publicKey,
-          signature: signaturePass
-        },
-        driver: {
-          publicKey: pairDriver.publicKey,
-          signature: signatureDriver
-        }
+      pass: {
+        publicKey: pairPass.publicKey,
+        signature: signaturePass
+      },
+      driver: {
+        publicKey: pairDriver.publicKey,
+        signature: signatureDriver
       }
     }),
   };

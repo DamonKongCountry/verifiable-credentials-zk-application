@@ -13,6 +13,7 @@ button {
 button.buttonList {
   background-color: darkcyan;
   color: white;
+  min-width: 150px;
 }
 
 button.buttonList:hover {
@@ -42,9 +43,15 @@ input.formSubmit:hover {
   pointer-events: none;
 }
 
-@media (prefers-reduced-motion: no-preference) {
+/* @media (prefers-reduced-motion: no-preference) {
   .App-logo {
     animation: App-logo-spin infinite 20s linear;
+  }
+} */
+
+@media (min-width: 768px) {
+  .background {
+    background-color: red;
   }
 }
 
@@ -74,6 +81,7 @@ input.formSubmit:hover {
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  overflow: hidden;
   /* padding: 20px; */
 }
 
@@ -83,12 +91,12 @@ input.formSubmit:hover {
   justify-content: flex-start;
   align-items: center;
   background-color: #fff;
-  border-radius: 30px;
-  padding: 10% 5% 10% 5%;
+  border-radius: 6px;
+  padding: 5% 5% 5% 5%;
   overflow: scroll;
   scrollbar-width: none;
   width: 40vw;
-  min-width: 900px;
+  min-width: fit-content;
   min-height: initial;
   height: 100%;
   margin: 20px;
@@ -108,6 +116,18 @@ input.formSubmit:hover {
 
 .verify {
   height: 70%;
+}
+
+.acc {
+  min-width: 500px;
+}
+
+.driver {
+  min-width: 700px;
+}
+
+.pass {
+  min-width: 700px;
 }
 
 @keyframes myAnimation {
@@ -145,17 +165,27 @@ input.formSubmit:hover {
   animation-iteration-count: infinite;
 }
 
+.credentialListBox {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  padding: 10px 10px 10px 10px;
+  width: 50%;
+  min-width: 600px;
+  overflow: scroll;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  background-color: #fff;
+  border-radius: 6px;
+}
+
 .credentialList {
   display: flex;
-  flex-direction: column;
-  justify-content: flex-center;
+  flex-direction: row;
+  justify-content: space-between;
   align-items: center;
-  max-height: 400px;
-  background-color: #fff;
-  border-radius: 30px;
-  flex-basis: 20%;
-  padding: 30px 10px 10px 10px;
-  min-width: 120px;
+  gap: 10px;
+  min-width: 300px;
 }
 
 ul {
@@ -215,8 +245,9 @@ ul {
   outline: 2px solid maroon;
   background-color: lightcoral;
   color: maroon;
-  width: 300px;
+  min-width: 300px;
   margin: 6px;
+  height: fit-content;
   border-radius: 6px;
   margin-top: 0;
   text-align: center;
@@ -226,8 +257,6 @@ ul {
   outline: 2px solid maroon;
   background-color: lightcoral;
   color: maroon;
-  width: 300px;
-  height: 40px;
   font-size: x-large;
   font-weight: bold;
   margin: 6px;
@@ -290,18 +319,20 @@ ul {
 
 .pageContents {
   display: flex;
-  flex-direction: row;
-  justify-content: center;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  padding-top: 10px;
+  padding-bottom: 10px;
   max-width: 100vw;
   min-width: 95vw;
   gap: 20px;
 }
 
 .divider {
-  height: 5px;
-  width: 90%;
+  width: 2px;
+  height: 90%;
   background-color: lightgray;
-  margin: 10px auto;
   align-self: start;
 }
 

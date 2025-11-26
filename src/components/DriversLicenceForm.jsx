@@ -72,7 +72,7 @@ export default function DriversLicenceForm({ sendMessages }) {
   };
 
   return (
-    <form className="list" onSubmit={(e) => e.preventDefault()}>
+    <form className="list driver" onSubmit={(e) => e.preventDefault()}>
       <div className="claimBox class">
         <h3>Licence Class (for example: C, R, MC)</h3>
         <input className="formInput" type="text" maxLength="1" onChange={(e) => { setLicenceClass(e.target.value); changeValue("licenceClass", String(e.target.value)) }} />
