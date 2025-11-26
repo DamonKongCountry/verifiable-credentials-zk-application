@@ -236,8 +236,6 @@ export default function Verify() {
           {verificationError && !verified && <Error message={errMsg} main={true} />}
           {verified && !verificationError && <h3 className='proverMsg'>Messages verified!</h3>}
         </div>
-        <Prover positions={positions} allMessages={allMessages} mode={"verify"} />
-        <Verifier />
       </div>
     </div>
   );

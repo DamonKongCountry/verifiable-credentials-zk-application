@@ -28,10 +28,8 @@ input.formSubmit:hover {
 
 .pageTitle {
   color: #fff;
-  margin-bottom: 30px;
   /* outline: 2px solid red */
   align-self: center;
-  margin-right: 45px;
 }
 
 .App {
@@ -104,14 +102,9 @@ input.formSubmit:hover {
 }
 
 .login {
-  max-height: 20vh;
+  min-height: fit-content;
   justify-content: center;
-  width: 30vw;
-}
-
-.register {
-  max-height: 50vh;
-  width: 30vw;
+  min-width: fit-content;
 }
 
 .verify {
@@ -199,9 +192,9 @@ ul {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  min-height: 400px;
   height: 100%;
   max-width: 90%;
+  margin-bottom: 20px;
   row-gap: 20px;
   flex-grow: 1;
 }
@@ -249,7 +242,6 @@ ul {
   margin: 6px;
   height: fit-content;
   border-radius: 6px;
-  margin-top: 0;
   text-align: center;
 }
 
@@ -261,7 +253,6 @@ ul {
   font-weight: bold;
   margin: 6px;
   border-radius: 6px;
-  margin-top: 40px;
   text-align: center;
 }
 

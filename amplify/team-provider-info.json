@@ -19,11 +19,11 @@
         },
         "vcUserId": {
           "deploymentBucketName": "amplify-verifiablecredential-dev-de347-deployment",
-          "s3Key": "amplify-builds/vcUserId-66694c7356744978426c-build.zip"
+          "s3Key": "amplify-builds/vcUserId-7a356844615535577438-build.zip"
         },
         "vcVerify": {
           "deploymentBucketName": "amplify-verifiablecredential-dev-de347-deployment",
-          "s3Key": "amplify-builds/vcVerify-536d5a565530362f6c4c-build.zip"
+          "s3Key": "amplify-builds/vcVerify-524a3474496a66723873-build.zip"
         }
       },
       "api": {
